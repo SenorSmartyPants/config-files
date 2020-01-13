@@ -113,11 +113,12 @@ services:
       - PGID=100
     volumes:
       - /opt/appdata/sonarr:/config
-      #- /mnt/storage/torrent:/downloads
-      #- /mnt/storage/Videos:/tv
       # one mount point so hardlinks work. And consistent paths
       # https://old.reddit.com/r/usenet/wiki/docker
       - /mnt/storage:/storage
+      # dockerfile defined volumes - map to empty dir 
+      - /mnt/storage/empty:/downloads
+      - /mnt/storage/empty:/tv
     ports:
       - 8989:8989
     restart: always
