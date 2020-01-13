@@ -115,8 +115,8 @@ services:
       - /opt/appdata/sonarr:/config
       #- /mnt/storage/torrent:/downloads
       #- /mnt/storage/Videos:/tv
-      # using one volume so hardlinking will work
-      # have to do remote path mapping since I'm not mounting storage in transmission
+      # one mount point so hardlinks work. And consistent paths
+      # https://old.reddit.com/r/usenet/wiki/docker
       - /mnt/storage:/storage
     ports:
       - 8989:8989
