@@ -1,0 +1,6 @@
+alias dcp='docker-compose -f /opt/docker-compose.yml '
+alias dcplogs='docker-compose -f /opt/docker-compose.yml logs -tf --tail="50" '
+alias dcpull='docker-compose -f /opt/docker-compose.yml pull'
+alias df='df -h -x aufs -x tmpfs -x udev'
+alias editle='sudo vi /opt/appdata/letsencrypt/nginx/site-confs/default'
+alias dur='du -sh * | sort -h'

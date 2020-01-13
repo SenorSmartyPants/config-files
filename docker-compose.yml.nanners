@@ -1,0 +1,123 @@
+---
+version: "2"
+services:
+
+  samba:
+    image: ad84bb303a77 
+    #image: dperson/samba:armhf
+    container_name: samba
+    #command: -s "media;/mnt;yes;no;no;" -s "mediaRO;/mnt;yes;yes;yes;" -s "storage;/mnt/storage;yes;no;no;" -s "storageRO;/mnt/storage;yes;yes;yes;"
+    command: -s "media;/mnt;yes;no;no;" -s "mediaRO;/mnt;yes;yes;yes;" -s "storage;/mnt/storage;yes;no;no;" -s "storageRO;/mnt/storage;yes;yes;yes;" -s "danb;/home/danb;yes;no;no"
+    environment:
+      TZ: CST6CDT
+      WORKGROUP: LAZYBUM
+      NMBD: 1 
+      SMB: 1 #disable SMB2 minimum version
+      #SHARE: "media;/mnt;yes;no;no;"
+      #SHARE: "mediaRO;/mnt;yes;yes;yes;"
+      GLOBAL: "force user ="
+      #GLOBAL: "log level = 2"
+      IMPORT: "/mnt/storage/smbpasswd.txt"
+    network_mode: host
+    #ports:
+    #  - 137:137/udp
+    #  - 138:138/udp
+    #  - 139:139
+    #  - 445:445
+    restart: always
+    #restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - /mnt:/mnt:z
+      - /home/danb:/home/danb:z
+
+  jellyfin:
+    image: jellyfin/jellyfin:10.4.1
+    #image: jellyfin/jellyfin:10.4.1
+    container_name: jellyfin
+    volumes:
+      - /opt/appdata/jellyfin:/config
+      - /home/danb/zap2xml:/config/xmltv
+      - /mnt/storage:/media
+    network_mode: host
+    #ports:
+    #  - 8196:8096
+    restart: always
+    environment:
+      - TZ=CST6CDT
+      - PUID=${PUID}
+      - PGID=100
+      #- PGID=${PGID}
+
+  domoticz:
+    image: linuxserver/domoticz
+    container_name: domoticz
+    network_mode: bridge
+    volumes:
+      - /opt/appdata/domoticz:/config
+    ports:
+      - 1443:1443
+      - 6144:6144
+      - 8080:8080
+    devices: 
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+    restart: always
+    environment:
+      #- TZ=CST6CDT
+      - TZ=America/Chicago
+      - PUID=${PUID}
+      - PGID=${PGID}
+
+  tvheadend:
+    image: linuxserver/tvheadend
+    container_name: tvheadend
+    network_mode: host
+    volumes:
+      - /opt/appdata/tvheadend:/config
+      - /opt/appdata/tvheadend/picons:/picons
+      #- /mnt/storage/Videos/tvheadend:/recordings
+      - /mnt/media1TB/Videos/tvheadend:/recordings
+      #- /home/danb/zap2xml/xmltv.xml:/config/data/xmltv.xml
+      - /home/danb/zap2xml:/config/data
+    restart: always
+    environment:
+      - TZ=CST6CDT
+      - PUID=${PUID}
+      - PGID=100
+      - RUN_OPTS=--http_root /tvheadend
+ 
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    volumes:
+      - /opt/appdata/transmission:/config
+      #- /mnt/elements3TB/torrent:/downloads
+      - /mnt/storage/torrent:/downloads
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: always
+    environment:
+      - TZ=CST6CDT
+      - PUID=${PUID}
+      - PGID=100
+
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - TZ=CST6CDT
+      - PUID=${PUID}
+      - PGID=100
+    volumes:
+      - /opt/appdata/sonarr:/config
+      #- /mnt/storage/torrent:/downloads
+      #- /mnt/storage/Videos:/tv
+      # using one volume so hardlinking will work
+      # have to do remote path mapping since I'm not mounting storage in transmission
+      - /mnt/storage:/storage
+    ports:
+      - 8989:8989
+    restart: always
