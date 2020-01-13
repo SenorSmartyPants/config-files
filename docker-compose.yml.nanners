@@ -34,21 +34,17 @@ services:
 
   jellyfin:
     image: jellyfin/jellyfin:10.4.1
-    #image: jellyfin/jellyfin:10.4.1
     container_name: jellyfin
     volumes:
       - /opt/appdata/jellyfin:/config
       - /home/danb/zap2xml:/config/xmltv
       - /mnt/storage:/media
     network_mode: host
-    #ports:
-    #  - 8196:8096
     restart: always
     environment:
       - TZ=CST6CDT
       - PUID=${PUID}
       - PGID=100
-      #- PGID=${PGID}
 
   domoticz:
     image: linuxserver/domoticz
