@@ -73,8 +73,6 @@ services:
       - PGID=100
     volumes:
       - /opt/appdata/radarr:/config
-      #- /mnt/storage/torrent:/downloads
-      #- /mnt/storage/Videos/New/Movies:/movies
       - /mnt/storage:/storage
     ports:
       - 7878:7878

@@ -113,8 +113,6 @@ services:
     volumes:
       - /opt/appdata/sonarr:/config
       - /mnt/storage:/storage
-      - /mnt/storage/empty:/downloads
-      - /mnt/storage/empty:/tv
     ports:
       - 8989:8989
     restart: always
