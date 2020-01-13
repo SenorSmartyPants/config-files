@@ -1,6 +1,9 @@
 ---
 version: "2"
 services:
+# use one mount point so hardlinks work. And consistent paths
+# map dockerfile define volumes to empty dir if using mount from above
+# https://old.reddit.com/r/usenet/wiki/docker
 
   samba:
     image: ad84bb303a77 
@@ -109,10 +112,7 @@ services:
       - PGID=100
     volumes:
       - /opt/appdata/sonarr:/config
-      # one mount point so hardlinks work. And consistent paths
-      # https://old.reddit.com/r/usenet/wiki/docker
       - /mnt/storage:/storage
-      # dockerfile defined volumes - map to empty dir 
       - /mnt/storage/empty:/downloads
       - /mnt/storage/empty:/tv
     ports:

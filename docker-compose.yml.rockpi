@@ -1,6 +1,9 @@
 ---
 version: "2"
 services:
+# use one mount point so hardlinks work. And consistent paths
+# map dockerfile define volumes to empty dir if using mount from above
+# https://old.reddit.com/r/usenet/wiki/docker
 
   heimdall:
     image: linuxserver/heimdall
@@ -68,13 +71,10 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=100
-    #update volumes so hardlinking works
     volumes:
       - /opt/appdata/radarr:/config
       #- /mnt/storage/torrent:/downloads
       #- /mnt/storage/Videos/New/Movies:/movies
-      # using one volume so hardlinking will work
-      # have to do remote path mapping since I'm not mounting storage in transmission
       - /mnt/storage:/storage
     ports:
       - 7878:7878
