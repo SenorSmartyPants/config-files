@@ -41,9 +41,9 @@ services:
       - JAVA_OPTS=-Xmx256m -Xms256m
     volumes:
       - /opt/appdata/sonic:/config
-      - /mnt/storage/mp3:/music
-      - /mnt/storage/Audiobooks:/audiobooks
-      - /mnt/storage/playlists:/playlists
+      - /mnt/storage/media/Music:/music
+      - /mnt/storage/media/Audiobooks:/audiobooks
+      - /mnt/storage/media/Playlists:/playlists
     ports:
       - 4040:4040
     restart: unless-stopped
@@ -59,7 +59,7 @@ services:
     volumes:
       - /opt/appdata/lidarr:/config
       - /mnt/storage/torrent:/downloads
-      - /mnt/storage/mp3:/music
+      - /mnt/storage/media/Music:/music
     ports:
       - 8686:8686
     restart: unless-stopped
@@ -90,7 +90,7 @@ services:
       - /opt/appdata/lazylibrarian:/config
       - /mnt/storage/torrent:/downloads
       - /mnt/storage/Books:/books
-      - /mnt/storage/Audiobooks:/audiobooks
+      - /mnt/storage/media/Audiobooks:/audiobooks
     ports:
       - 5299:5299
     restart: unless-stopped
