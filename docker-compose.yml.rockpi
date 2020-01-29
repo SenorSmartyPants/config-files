@@ -152,7 +152,6 @@ services:
       - /mnt/storage/Jukeboxes:/var/www/html
       - /mnt/storage/Jukeboxes:/jukeboxes
       - /mnt/storage/media/Videos:/videos
-      - /mnt/storage/Videos/tvheadend:/tvheadend
     ports:
       - 8123:80
     restart: always

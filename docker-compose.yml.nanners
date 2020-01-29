@@ -76,9 +76,7 @@ services:
     volumes:
       - /opt/appdata/tvheadend:/config
       - /opt/appdata/tvheadend/picons:/picons
-      #- /mnt/storage/Videos/tvheadend:/recordings
-      - /mnt/media1TB/Videos/tvheadend:/recordings
-      #- /home/danb/zap2xml/xmltv.xml:/config/data/xmltv.xml
+      - /mnt/media1TB/media/Videos/tvheadend:/recordings
       - /home/danb/zap2xml:/config/data
     restart: always
     environment:
