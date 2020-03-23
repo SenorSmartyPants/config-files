@@ -41,9 +41,9 @@ services:
       - JAVA_OPTS=-Xmx256m -Xms256m
     volumes:
       - /opt/appdata/sonic:/config
-      - /mnt/storage/media/Music:/music
-      - /mnt/storage/media/Audiobooks:/audiobooks
-      - /mnt/storage/media/Playlists:/playlists
+      - /mnt/storage/media/Music:/storage/media/Music
+      - /mnt/storage/media/Audiobooks:/storage/media/Audiobooks
+      - /mnt/storage/media/Playlists:/storage/media/Playlists
     ports:
       - 4040:4040
     restart: unless-stopped
