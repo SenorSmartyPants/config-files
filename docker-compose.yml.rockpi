@@ -38,7 +38,7 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
-      - JAVA_OPTS=-Xmx256m -Xms256m
+      - JAVA_OPTS=-Xmx256m -Xms256m -Dserver.connection-timeout=-1
     volumes:
       - /opt/appdata/sonic:/config
       - /mnt/storage/media/Music:/storage/media/Music
