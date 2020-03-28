@@ -112,6 +112,23 @@ services:
       - 8090:8090
     restart: unless-stopped
 
+  mylar3:
+    image: hotio/mylar3:unstable
+    container_name: mylar3
+    environment:
+      - TZ=${TZ}
+      - PUID=1000
+      - PGID=100
+      #- DEBUG=yes
+    volumes:
+      - /opt/appdata/mylar3:/config
+      - /mnt/storage/empty:/downloads
+      - /mnt/storage/empty:/comics
+      - /mnt/storage:/storage
+    ports:
+      - 8090:8090
+    restart: unless-stopped
+
   #need to fix epub order...
   cops:
     image: linuxserver/cops
